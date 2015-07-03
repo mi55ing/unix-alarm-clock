@@ -8,8 +8,18 @@
 ###################################################################
 # Change Log (NB: also change this in the preamble)
 # =================================================
+# v1.1:
+# Optimising for scientific linux with only 'play' which starts 'sox' 
+#  - The command to capture PIDs runs before sox has started, so 
+#    add a short (0.1s) sleep.
+#  - Play quietly ("-q" or "-quiet" = screen output, not sound!) 
+#    to avoid unneccessary screen output
+#  - Use "kill -PIPE" to avoid Termination message on exit.
+# 
 # v1.0:
 # Initial release. 
+#
+#
 #
 # GPLv3 LICENSE:
 # ==============
@@ -44,7 +54,7 @@
 #############################################################
 echo
 echo " /-----------------------------------------------------------------------------\\"
-echo " | alarmclock.sh v1.0 Copyright (C) 2015 'mi55 ing'  mi55ing@protonmail.com    |"
+echo " | alarmclock.sh v1.1 Copyright (C) 2015 'mi55 ing'  mi55ing@protonmail.com    |"
 echo " | This program comes with ABSOLUTELY NO WARRANTY; for details see license.txt.|"
 echo " | This is free software, and you are welcome to redistribute it               |"
 echo " | under certain conditions; see license.txt for details.                      |" 
@@ -425,15 +435,15 @@ then
 else
     if [[ $mplayerresult == 0 ]]
     then
-	mplayer birdsong.wav & >/dev/null 2>&1
+	mplayer -quiet birdsong.wav & >/dev/null 2>&1
     else
 	if [[ $playerresult == 0 ]]
 	then
-            play birdsong.wav & >/dev/null 2>&1 
+            play -q birdsong.wav & >/dev/null 2>&1 
 	else
      	    if [[ $aplayerresult == 0 ]]
 	    then
-		aplay birdsong.wav & >/dev/null 2>&1 
+		aplay -q birdsong.wav & >/dev/null 2>&1 
 	    fi
 	fi
     fi
@@ -442,6 +452,8 @@ fi
 ################################################
 # NOW GET THE PROCESS ID TO KILL IF ENTER IS HIT
 ################################################
+# First, sleep a short time to let aplay/play stary any needed processes..
+sleep 0.1
 playerprocessid=`ps ax | grep birdson\[\g\] | grep -v grep | awk '{print $1}'`
 #echo $playerprocessid
 
@@ -468,7 +480,7 @@ fi
 if read -n 6 -t 15 response; then
     echo
     echo "Great, you made it in time!"
-    kill $playerprocessid >/dev/null 2>&1
+    kill -PIPE $playerprocessid >/dev/null 2>&1
     #use the -PIPE option to suppress output
     kill -PIPE $flashprocessid  >/dev/null 2>&1  
     #leave the function alarmstart()
@@ -494,15 +506,15 @@ then
 else
     if [[ $mplayerresult == 0 ]]
     then
-	mplayer GrandfatherClock.wav & >/dev/null 2>&1
+	mplayer -quiet GrandfatherClock.wav & >/dev/null 2>&1
     else
 	if [[ $playerresult == 0 ]]
 	then
-            play GrandfatherClock.wav & >/dev/null 2>&1 
+            play -q GrandfatherClock.wav & >/dev/null 2>&1 
 	else
      	    if [[ $aplayerresult == 0 ]]
 	    then
-		aplay GrandfatherClock.wav & >/dev/null 2>&1 
+		aplay -q GrandfatherClock.wav & >/dev/null 2>&1 
 	    fi
 	fi
     fi
@@ -512,6 +524,8 @@ fi
 ################################################
 # NOW GET THE PROCESS ID TO KILL IF ENTER IS HIT
 ################################################
+# First, sleep a short time to let aplay/play stary any needed processes..
+sleep 0.1
 playerprocess2id=`ps ax | grep GrandfatherCloc\[\k\] | grep -v grep | awk '{print $1}'` 
 #echo $playerprocess2id
 
@@ -531,7 +545,7 @@ fi
 if read -n 6 -t 35 response; then
     echo 
     echo "Great, you made it in time!"
-    kill $playerprocess2id >/dev/null 2>&1
+    kill -PIPE $playerprocess2id >/dev/null 2>&1
     #use the -PIPE option to suppress output
     kill -PIPE $flashprocessid >/dev/null 2>&1
     #leave the function alarmstart()
@@ -557,15 +571,15 @@ then
 else
     if [[ $mplayerresult == 0 ]]
     then
-	mplayer CarterAirRaidSiren.wav & >/dev/null 2>&1
+	mplayer -quiet CarterAirRaidSiren.wav & >/dev/null 2>&1
     else
 	if [[ $playerresult == 0 ]]
 	then
-            play CarterAirRaidSiren.wav & >/dev/null 2>&1 
+            play -q CarterAirRaidSiren.wav & >/dev/null 2>&1 
 	else
      	    if [[ $aplayerresult == 0 ]]
 	    then
-		aplay CarterAirRaidSiren.wav & >/dev/null 2>&1 
+		aplay -q CarterAirRaidSiren.wav & >/dev/null 2>&1 
 	    fi
 	fi
     fi
@@ -575,6 +589,8 @@ fi
 ################################################
 # NOW GET THE PROCESS ID TO KILL IF ENTER IS HIT
 ################################################
+# First, sleep a short time to let aplay/play stary any needed processes..
+sleep 0.1
 playerprocess3id=`ps ax | grep CarterAirRaidSire\[\n\] | grep -v grep | awk '{print $1}'`
 #echo $playerprocess3id
 
@@ -592,7 +608,7 @@ fi
 if read -n 6 -t 68 response; then
     echo 
     echo "Great, you made it in time!"
-    kill $playerprocess3id >/dev/null 2>&1
+    kill -PIPE $playerprocess3id >/dev/null 2>&1
     #use the -PIPE option to suppress output
     kill -PIPE $flashprocessid >/dev/null 2>&1
     #leave the function alarmstart()
