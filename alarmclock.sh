@@ -8,6 +8,10 @@
 ###################################################################
 # Change Log (NB: also change this in the preamble)
 # =================================================
+# v1.2:
+# Make it louder; hardware speaker sounded awfully quiet with 
+# amixer Master Vol @50%
+#
 # v1.1:
 # Optimising for scientific linux with only 'play' which starts 'sox' 
 #  - The command to capture PIDs runs before sox has started, so 
@@ -54,7 +58,7 @@
 #############################################################
 echo
 echo " /-----------------------------------------------------------------------------\\"
-echo " | alarmclock.sh v1.1 Copyright (C) 2015 'mi55 ing'  mi55ing@protonmail.com    |"
+echo " | alarmclock.sh v1.2 Copyright (C) 2015 'mi55 ing'  mi55ing@protonmail.com    |"
 echo " | This program comes with ABSOLUTELY NO WARRANTY; for details see license.txt.|"
 echo " | This is free software, and you are welcome to redistribute it               |"
 echo " | under certain conditions; see license.txt for details.                      |" 
@@ -356,7 +360,7 @@ function alarmstart(){
 #NB use the ">/dev/null 2>&1"  so that it fails quietly; we trap the errors anyway
 #---------------------------------
 #standard bash "amixer" command
-amixer set Master 50% >/dev/null  2>&1
+amixer set Master 100% >/dev/null  2>&1
 volumeresult=$?
 # trap any error
 #echo "Standard Linux amixer setting attempt status $volumeresult"
